@@ -481,7 +481,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello", "hello.php")
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([:invalid_extension])
+      expect(instance.document_attacher.errors).to eq([[:invalid_extension, extension: "php", allowed: "txt"]])
       expect(instance.document).to be_nil
     end
 
@@ -489,7 +489,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello")
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([:invalid_extension])
+      expect(instance.document_attacher.errors).to eq([[:invalid_extension, extension: "", allowed: "txt"]])
       expect(instance.document).to be_nil
     end
   end
