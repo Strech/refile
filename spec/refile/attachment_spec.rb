@@ -335,7 +335,7 @@ describe Refile::Attachment do
       instance.document = file
 
       expect(instance.document_attacher.valid?).to be_falsy
-      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+      expect(instance.document_attacher.errors).to eq([[:invalid_content_type, content_type: "text/plain"]])
     end
   end
 
@@ -406,7 +406,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("a" * 120)
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([:too_large])
+      expect(instance.document_attacher.errors).to eq([[:too_large, max_size: "0.1Kb"]])
       expect(instance.document).to be_nil
     end
 
@@ -449,7 +449,7 @@ describe Refile::Attachment do
         instance.document = file
       end.to raise_error(Refile::Invalid)
 
-      expect(instance.document_attacher.errors).to eq([:too_large])
+      expect(instance.document_attacher.errors).to eq([[:too_large, max_size: "0.1Kb"]])
       expect(instance.document).to be_nil
     end
   end
@@ -461,7 +461,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("a" * 120)
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([:too_large])
+      expect(instance.document_attacher.errors).to eq([[:too_large, max_size: "0.1Kb"]])
       expect(instance.document).to be_nil
     end
   end
@@ -481,7 +481,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello", "hello.php")
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([[:invalid_extension, extension: "php", allowed: "txt"]])
+      expect(instance.document_attacher.errors).to eq([[:invalid_extension, extension: "php", allowed_types: "txt"]])
       expect(instance.document).to be_nil
     end
 
@@ -489,7 +489,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello")
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([[:invalid_extension, extension: "", allowed: "txt"]])
+      expect(instance.document_attacher.errors).to eq([[:invalid_extension, extension: "", allowed_types: "txt"]])
       expect(instance.document).to be_nil
     end
   end
@@ -509,7 +509,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello", content_type: "application/php")
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+      expect(instance.document_attacher.errors).to eq([[:invalid_content_type, content_type: "application/php"]])
       expect(instance.document).to be_nil
     end
 
@@ -517,7 +517,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello")
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+      expect(instance.document_attacher.errors).to eq([[:invalid_content_type, content_type: nil]])
       expect(instance.document).to be_nil
     end
   end
@@ -537,7 +537,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello", content_type: "application/php")
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+      expect(instance.document_attacher.errors).to eq([[:invalid_content_type, content_type: "application/php"]])
       expect(instance.document).to be_nil
     end
 
@@ -545,7 +545,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello")
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+      expect(instance.document_attacher.errors).to eq([[:invalid_content_type, content_type: nil]])
       expect(instance.document).to be_nil
     end
   end

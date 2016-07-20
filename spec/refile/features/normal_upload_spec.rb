@@ -21,7 +21,7 @@ feature "Normal HTTP Post file uploads" do
     click_button "Create"
 
     expect(page).to have_selector(".field_with_errors")
-    expect(page).to have_content("Document is too large")
+    expect(page).to have_content("Document File size should be less than 0.1Kb")
   end
 
   scenario "Fail to upload a file that has the wrong format" do
@@ -31,7 +31,7 @@ feature "Normal HTTP Post file uploads" do
     click_button "Create"
 
     expect(page).to have_selector(".field_with_errors")
-    expect(page).to have_content("Image has an invalid file format")
+    expect(page).to have_content("Image You are not allowed to upload text/plain files")
   end
 
   scenario "Fail to upload a file that has the wrong format then submit" do
@@ -41,7 +41,7 @@ feature "Normal HTTP Post file uploads" do
     click_button "Create"
 
     expect(page).to have_selector(".field_with_errors")
-    expect(page).to have_content("Image has an invalid file format")
+    expect(page).to have_content("Image You are not allowed to upload text/plain files")
     click_button "Create"
     expect(page).to have_selector("h1", text: "A cool post")
     expect(page).not_to have_link("Document")

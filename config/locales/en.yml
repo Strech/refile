@@ -2,7 +2,7 @@ en:
   activerecord:
     errors:
       messages:
-        too_large: "is too large"
         download_failed: "could not be downloaded"
-        invalid_content_type: "has an invalid file format"
-        invalid_extension: "You are not allowed to upload \"%{extension}\" files, allowed types: %{allowed}"
+        too_large: "File size should be less than %{max_size}"
+        invalid_content_type: "You are not allowed to upload %{content_type} files"
+        invalid_extension: "You are not allowed to upload %{extension} files, allowed types: %{allowed_types}"

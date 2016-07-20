@@ -43,12 +43,19 @@ module Refile
         allowed = valid_extensions.map(&:downcase)
 
         unless allowed.include?(extension)
-          errors << [:invalid_extension, extension: extension, allowed: allowed.join(", ")]
+          errors << [:invalid_extension, extension: extension, allowed_types: allowed.join(", ")]
         end
       end
 
-      errors << :invalid_content_type if valid_content_types and not valid_content_types.include?(attacher.content_type)
-      errors << :too_large if cache.max_size and attacher.size and attacher.size >= cache.max_size
+      if valid_content_types and not valid_content_types.include?(attacher.content_type)
+        errors << [:invalid_content_type, content_type: attacher.content_type]
+      end
+
+      if cache.max_size and attacher.size and attacher.size >= cache.max_size
+        max_size = "#{(cache.max_size / 1024.0).round(1)}Kb"
+        errors << [:too_large, max_size: max_size]
+      end
+
       errors
     end
   end
